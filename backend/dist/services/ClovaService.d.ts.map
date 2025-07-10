@@ -1,0 +1,1 @@
+{"version":3,"file":"ClovaService.d.ts","sourceRoot":"","sources":["../../src/services/ClovaService.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,WAAW,EAAE,MAAM,eAAe,CAAC;AAE5C,qBAAa,YAAY;IACvB,OAAO,CAAC,OAAO,CAAS;;IASlB,YAAY,CAAC,SAAS,EAAE,MAAM,GAAG,OAAO,CAAC,WAAW,EAAE,CAAC;IAyC7D,OAAO,CAAC,kBAAkB;IAc1B,OAAO,CAAC,oBAAoB;IAYtB,WAAW,IAAI,OAAO,CAAC,OAAO,CAAC;CAatC"}
