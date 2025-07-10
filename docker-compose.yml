@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:14-3.2
+    environment:
+      POSTGRES_DB: invoice_scanner
+      POSTGRES_USER: scanner
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - invoice_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scanner -d invoice_scanner"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://scanner:password123@postgres:5432/invoice_scanner
+      JWT_SECRET: your-super-secret-jwt-key-here-change-in-production
+      CLOVA_SERVICE_URL: http://clova-service:8000
+      NODE_ENV: development
+      UPLOAD_DIR: /app/uploads
+      ALLOWED_ORIGINS: http://localhost:3000,capacitor://localhost
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 100
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      clova-service:
+        condition: service_started
+    volumes:
+      - ./uploads:/app/uploads
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - invoice_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  clova-service:
+    build:
+      context: ./clova-service
+      dockerfile: Dockerfile
+    environment:
+      PYTHONPATH: /app
+      MODEL_CACHE_DIR: /app/models
+      CUDA_AVAILABLE: false
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - model_cache:/app/models
+      - ./clova-service:/app
+    networks:
+      - invoice_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+volumes:
+  postgres_data:
+    driver: local
+  model_cache:
+    driver: local
+
+networks:
+  invoice_network:
+    driver: bridge
