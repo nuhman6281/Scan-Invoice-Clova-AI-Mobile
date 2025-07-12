@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shop {
+  id          String    @id @default(uuid())
+  name        String    @db.VarChar(255)
+  address     String?   @db.Text
+  latitude    Decimal   @db.Decimal(10, 8)
+  longitude   Decimal   @db.Decimal(11, 8)
+  phone       String?   @db.VarChar(20)
+  rating      Decimal?  @db.Decimal(3, 2)
+  isPremium   Boolean   @default(false) @map("is_premium")
+  category    String?   @db.VarChar(100)
+  imageUrl    String?   @map("image_url") @db.VarChar(500)
+  description String?   @db.Text
+  openingHours String?  @map("opening_hours") @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  // Relations
+  products    Product[]
+  
+  // Indexes for performance
+  @@index([latitude, longitude])
+  @@index([category])
+  @@index([isPremium])
+  @@map("shops")
+}
+
+model Product {
+  id             String   @id @default(uuid())
+  shopId         String   @map("shop_id")
+  name           String   @db.VarChar(255)
+  normalizedName String   @map("normalized_name") @db.VarChar(255)
+  category       String?  @db.VarChar(100)
+  price          Decimal  @db.Decimal(10, 2)
+  imageUrl       String?  @map("image_url") @db.VarChar(500)
+  brand          String?  @db.VarChar(100)
+  description    String?  @db.Text
+  keywords       String[] @db.VarChar(100)
+  isAvailable    Boolean  @default(true) @map("is_available")
+  stockQuantity  Int?     @map("stock_quantity")
+  barcode        String?  @db.VarChar(50)
+  weight         Decimal? @db.Decimal(8, 3)
+  unit           String?  @db.VarChar(20)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  shop           Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  
+  // Indexes for performance
+  @@index([shopId])
+  @@index([normalizedName])
+  @@index([category])
+  @@index([price])
+  @@index([isAvailable])
+  @@index([keywords])
+  @@map("products")
+}
+
+model ScanHistory {
+  id                String   @id @default(uuid())
+  imagePath         String?  @map("image_path") @db.VarChar(500)
+  scanResult        Json?    @map("scan_result")
+  itemsFound        Int      @default(0) @map("items_found")
+  alternativesFound Int      @default(0) @map("alternatives_found")
+  potentialSavings  Decimal  @default(0) @db.Decimal(10, 2) @map("potential_savings")
+  confidenceScore   Decimal? @db.Decimal(3, 2) @map("confidence_score")
+  processingTime    Int?     @map("processing_time") // in milliseconds
+  userLatitude      Decimal? @db.Decimal(10, 8) @map("user_latitude")
+  userLongitude     Decimal? @db.Decimal(11, 8) @map("user_longitude")
+  userId            String?  @map("user_id") @db.VarChar(100)
+  deviceInfo        Json?    @map("device_info")
+  createdAt         DateTime @default(now()) @map("created_at")
+  
+  // Indexes for performance
+  @@index([userId])
+  @@index([createdAt])
+  @@index([userLatitude, userLongitude])
+  @@map("scan_history")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  name      String   @db.VarChar(100)
+  phone     String?  @db.VarChar(20)
+  isActive  Boolean  @default(true) @map("is_active")
+  isAdmin   Boolean  @default(false) @map("is_admin")
+  lastLogin DateTime? @map("last_login")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  // Indexes
+  @@index([email])
+  @@index([isActive])
+  @@map("users")
+}
+
+model ApiKey {
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(100)
+  key         String   @unique @db.VarChar(255)
+  isActive    Boolean  @default(true) @map("is_active")
+  permissions Json?    // Array of permissions
+  expiresAt   DateTime? @map("expires_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Indexes
+  @@index([key])
+  @@index([isActive])
+  @@map("api_keys")
+}
+
+model Analytics {
+  id              String   @id @default(uuid())
+  date            DateTime @db.Date
+  totalScans      Int      @default(0) @map("total_scans")
+  successfulScans Int      @default(0) @map("successful_scans")
+  totalSavings    Decimal  @default(0) @db.Decimal(12, 2) @map("total_savings")
+  avgProcessingTime Int    @default(0) @map("avg_processing_time")
+  uniqueUsers     Int      @default(0) @map("unique_users")
+  popularItems    Json?    @map("popular_items")
+  errorRate       Decimal  @default(0) @db.Decimal(5, 4) @map("error_rate")
+  createdAt       DateTime @default(now()) @map("created_at")
+  
+  // Indexes
+  @@unique([date])
+  @@index([date])
+  @@map("analytics")
+} 

@@ -1,0 +1,127 @@
+name: clova_invoice_scanner
+description: CLOVA AI Invoice Scanner - Find better prices from nearby shops
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Network & API
+  dio: ^5.7.0
+  retrofit: ^4.4.1
+  json_annotation: ^4.9.0
+
+  # Camera & Image
+  camera: ^0.10.6
+  image_picker: ^1.1.2
+  flutter_image_compress: ^2.1.0
+  photo_view: ^0.14.0
+
+  # Location
+  geolocator: ^13.0.1
+  permission_handler: ^11.3.1
+
+  # UI & Design
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
+  flutter_svg: ^2.0.10+1
+  lottie: ^3.1.2
+
+  # Utilities
+  freezed_annotation: ^2.4.4
+  get_it: ^8.0.0
+  dartz: ^0.10.1
+  uuid: ^4.4.0
+  intl: ^0.19.0
+  equatable: ^2.0.5
+
+  # Storage
+  shared_preferences: ^2.2.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Maps
+  google_maps_flutter: ^2.6.0
+  geocoding: ^3.0.0
+
+  # QR Code
+  qr_flutter: ^4.1.0
+
+  # Charts
+  fl_chart: ^0.68.0
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+
+  # Device Info
+  device_info_plus: ^10.1.0
+  package_info_plus: ^8.3.0
+
+  # Connectivity
+  connectivity_plus: ^5.0.2
+
+  # Biometrics
+  local_auth: ^2.1.8
+
+  # Share
+  share_plus: ^7.2.2
+
+  # File
+  path_provider: ^2.1.4
+
+  # HTTP Override (for development)
+  http: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Code Generation
+  build_runner: ^2.4.12
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  retrofit_generator: ^8.2.1
+
+  # Linting
+  flutter_lints: ^3.0.0
+
+  # Testing
+  mockito: ^5.4.4
+  bloc_test: ^9.1.6
+
+  # Integration Testing
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - assets/fonts/
+
+  # fonts:
+  #   - family: Inter
+  #     fonts:
+  #       - asset: assets/fonts/Inter-Regular.ttf
+  #       - asset: assets/fonts/Inter-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Inter-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Inter-Bold.ttf
+  #         weight: 700
