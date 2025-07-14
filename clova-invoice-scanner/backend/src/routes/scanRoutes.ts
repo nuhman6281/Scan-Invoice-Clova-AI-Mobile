@@ -87,7 +87,7 @@ router.post(
       }
 
       // Find better offers for extracted items
-      const betterOffers = [];
+      const betterOffers: any[] = [];
       if (clovaResult.items && clovaResult.items.length > 0) {
         for (const item of clovaResult.items) {
           try {

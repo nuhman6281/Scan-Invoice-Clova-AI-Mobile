@@ -12,7 +12,7 @@ misc/*
 __pycache__/
 *.py[cod]
 *$py.class
-
+clova-invoice-scanner/backend/node_modules
 # C extensions
 *.so
 

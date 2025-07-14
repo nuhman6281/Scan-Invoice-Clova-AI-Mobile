@@ -1,0 +1,22 @@
+[Unit]
+Description=CLOVA AI Invoice Scanner System
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=forking
+User=borncode
+WorkingDirectory=/Users/borncode/Desktop/Projects/Test Projects/flutter/donut/clova-invoice-scanner
+ExecStart=/Users/borncode/Desktop/Projects/Test Projects/flutter/donut/clova-invoice-scanner/start_all.sh
+ExecStop=/Users/borncode/Desktop/Projects/Test Projects/flutter/donut/clova-invoice-scanner/stop_all.sh
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=300
+TimeoutStopSec=60
+
+# Environment variables
+Environment=NODE_ENV=production
+Environment=PYTHONPATH=/Users/borncode/Desktop/Projects/Test Projects/flutter/donut/donut_env/bin
+
+[Install]
+WantedBy=multi-user.target 

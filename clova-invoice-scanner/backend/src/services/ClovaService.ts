@@ -54,10 +54,10 @@ class ClovaService {
 
   public static async processInvoice(imageBuffer: Buffer): Promise<any> {
     try {
-      if (this.useMock) {
-        logger.info("Using mock CLOVA processing");
-        return await this.processWithMock(imageBuffer);
-      }
+      // if (this.useMock) {
+      //   logger.info("Using mock CLOVA processing");
+      //   return await this.processWithMock(imageBuffer);
+      // }
 
       logger.info("Using real CLOVA AI processing");
 
@@ -98,41 +98,9 @@ class ClovaService {
     // Generate realistic invoice data
     const invoiceTypes = [
       {
-        items: [
-          { name: "Coffee Latte", price: 4.5, quantity: 2, total: 9.0 },
-          { name: "Croissant", price: 3.25, quantity: 1, total: 3.25 },
-          { name: "Orange Juice", price: 2.75, quantity: 1, total: 2.75 },
-        ],
-        total: 15.0,
-        merchant: "Starbucks Coffee",
-      },
-      {
-        items: [
-          { name: "Organic Bananas", price: 2.99, quantity: 1, total: 2.99 },
-          { name: "Whole Milk", price: 3.49, quantity: 2, total: 6.98 },
-          { name: "Bread", price: 2.25, quantity: 1, total: 2.25 },
-          { name: "Eggs", price: 4.99, quantity: 1, total: 4.99 },
-        ],
-        total: 16.21,
-        merchant: "Whole Foods Market",
-      },
-      {
-        items: [
-          { name: "Margherita Pizza", price: 18.99, quantity: 1, total: 18.99 },
-          { name: "Caesar Salad", price: 12.5, quantity: 1, total: 12.5 },
-          { name: "Garlic Bread", price: 4.99, quantity: 1, total: 4.99 },
-        ],
-        total: 36.48,
-        merchant: "Pizza Palace",
-      },
-      {
-        items: [
-          { name: "iPhone Charger", price: 19.99, quantity: 1, total: 19.99 },
-          { name: "USB Cable", price: 12.5, quantity: 2, total: 25.0 },
-          { name: "Phone Case", price: 15.75, quantity: 1, total: 15.75 },
-        ],
-        total: 60.74,
-        merchant: "Best Buy",
+        items: [],
+        total: 0.0,
+        merchant: "",
       },
     ];
 

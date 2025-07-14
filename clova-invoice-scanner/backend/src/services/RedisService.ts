@@ -7,9 +7,8 @@ class RedisService {
   public static async initialize(): Promise<void> {
     try {
       this.redis = new Redis(
-        process.env.REDIS_URL || "redis://localhost:6380",
+        process.env["REDIS_URL"] || "redis://localhost:6380",
         {
-          retryDelayOnFailover: 100,
           maxRetriesPerRequest: 3,
           lazyConnect: true,
         }

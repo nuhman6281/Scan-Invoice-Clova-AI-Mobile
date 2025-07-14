@@ -36,47 +36,12 @@ app.add_middleware(
 SAMPLE_INVOICES = {
     "receipt": {
         "items": [
-            {"name": "Coffee Latte", "price": 4.50, "quantity": 2, "total": 9.00},
-            {"name": "Croissant", "price": 3.25, "quantity": 1, "total": 3.25},
-            {"name": "Orange Juice", "price": 2.75, "quantity": 1, "total": 2.75}
+            
         ],
-        "total_amount": 15.00,
-        "merchant": "Starbucks Coffee",
-        "confidence": 0.92
+        "total_amount": 0.00,
+        "merchant": "",
+        "confidence": 0.00
     },
-    "grocery": {
-        "items": [
-            {"name": "Organic Bananas", "price": 2.99, "quantity": 1, "total": 2.99},
-            {"name": "Whole Milk", "price": 3.49, "quantity": 2, "total": 6.98},
-            {"name": "Bread", "price": 2.25, "quantity": 1, "total": 2.25},
-            {"name": "Eggs", "price": 4.99, "quantity": 1, "total": 4.99},
-            {"name": "Chicken Breast", "price": 8.99, "quantity": 1, "total": 8.99}
-        ],
-        "total_amount": 25.20,
-        "merchant": "Whole Foods Market",
-        "confidence": 0.88
-    },
-    "electronics": {
-        "items": [
-            {"name": "iPhone Charger", "price": 19.99, "quantity": 1, "total": 19.99},
-            {"name": "USB Cable", "price": 12.50, "quantity": 2, "total": 25.00},
-            {"name": "Phone Case", "price": 15.75, "quantity": 1, "total": 15.75}
-        ],
-        "total_amount": 60.74,
-        "merchant": "Best Buy",
-        "confidence": 0.85
-    },
-    "restaurant": {
-        "items": [
-            {"name": "Margherita Pizza", "price": 18.99, "quantity": 1, "total": 18.99},
-            {"name": "Caesar Salad", "price": 12.50, "quantity": 1, "total": 12.50},
-            {"name": "Garlic Bread", "price": 4.99, "quantity": 1, "total": 4.99},
-            {"name": "Soft Drink", "price": 2.99, "quantity": 2, "total": 5.98}
-        ],
-        "total_amount": 42.46,
-        "merchant": "Pizza Palace",
-        "confidence": 0.90
-    }
 }
 
 @app.get("/")

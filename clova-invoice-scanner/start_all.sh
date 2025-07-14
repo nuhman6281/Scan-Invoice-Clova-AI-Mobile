@@ -35,7 +35,7 @@ print_error() {
 # Function to check if a port is in use
 check_port() {
     local port=$1
-    if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null; then
+    if lsof -Pi :"$port" -sTCP:LISTEN -t >/dev/null; then
         return 0
     else
         return 1
@@ -89,19 +89,19 @@ fi
 
 # Step 1: Start Database Services
 print_status "Step 1: Starting database services (PostgreSQL & Redis)..."
-docker-compose up -d postgres redis
+docker compose up -d postgres redis
 
 # Wait for database to be ready
 print_status "Waiting for database services to be ready..."
 sleep 30
 
 # Check if database services are running
-if ! docker-compose ps postgres | grep -q "Up"; then
+if ! docker compose ps postgres | grep -q "Up"; then
     print_error "PostgreSQL failed to start"
     exit 1
 fi
 
-if ! docker-compose ps redis | grep -q "Up"; then
+if ! docker compose ps redis | grep -q "Up"; then
     print_error "Redis failed to start"
     exit 1
 fi
@@ -227,7 +227,7 @@ cleanup() {
 
     # Stop database services
     cd "$SCRIPT_DIR"
-    docker-compose down
+    docker compose down
 
     print_success "All services stopped"
     exit 0
