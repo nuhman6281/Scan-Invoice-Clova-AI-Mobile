@@ -230,7 +230,7 @@ export default function ProductsPage() {
                       </div>
                       <div className="mt-1 flex items-center text-sm text-gray-500">
                         <p className="font-medium text-green-600">
-                          $
+                          ₹
                           {Object.is(product.price, null)
                             ? "N/A"
                             : parseFloat(product.price.toString()).toFixed(2)}

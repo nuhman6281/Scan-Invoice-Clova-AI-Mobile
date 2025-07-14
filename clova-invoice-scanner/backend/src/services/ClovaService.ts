@@ -27,13 +27,13 @@ class ClovaService {
         this.useMock = false;
       } else {
         logger.warn(
-          "Real CLOVA service not available - falling back to mock processing"
+          "Real2 CLOVA service not available - falling back to mock processing"
         );
         this.useMock = true;
       }
     } catch (error) {
       logger.warn(
-        "Real CLOVA service not available - falling back to mock processing"
+        "Real1 CLOVA service not available - falling back to mock processing"
       );
       this.useMock = true;
       // Don't throw error, just log warning

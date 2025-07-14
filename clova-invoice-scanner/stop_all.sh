@@ -45,6 +45,6 @@ fi
 
 # Stop Docker services
 print_status "Stopping Docker services..."
-docker-compose down
+docker compose down
 
 print_success "All services stopped successfully!"

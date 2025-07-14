@@ -314,6 +314,118 @@ async function main() {
 
   console.log("📦 Created products:", products.length);
 
+  // === TEST SHOPS AND PRODUCTS FOR INVOICE MATCHING ===
+  const testShop1 = await prisma.shop.create({
+    data: {
+      name: "Smart Mart",
+      address: "123 Main St",
+      latitude: 10.0001,
+      longitude: 76.0001,
+      phone: "+1-555-1111",
+      rating: 4.3,
+      isPremium: false,
+      category: "Grocery",
+      imageUrl: "https://example.com/smartmart.jpg",
+      description: "Test grocery shop for invoice matching",
+      openingHours: "Daily: 8AM-10PM",
+    },
+  });
+  const testShop2 = await prisma.shop.create({
+    data: {
+      name: "Budget Bazaar",
+      address: "456 Market Rd",
+      latitude: 10.0002,
+      longitude: 76.0002,
+      phone: "+1-555-2222",
+      rating: 4.0,
+      isPremium: false,
+      category: "Grocery",
+      imageUrl: "https://example.com/budgetbazaar.jpg",
+      description: "Test grocery shop for invoice matching",
+      openingHours: "Daily: 8AM-10PM",
+    },
+  });
+  const testShop3 = await prisma.shop.create({
+    data: {
+      name: "Value Store",
+      address: "789 Savings Ave",
+      latitude: 10.0003,
+      longitude: 76.0003,
+      phone: "+1-555-3333",
+      rating: 4.1,
+      isPremium: false,
+      category: "Grocery",
+      imageUrl: "https://example.com/valuestore.jpg",
+      description: "Test grocery shop for invoice matching",
+      openingHours: "Daily: 8AM-10PM",
+    },
+  });
+
+  await prisma.product.createMany({
+    data: [
+      {
+        shopId: testShop1.id,
+        name: "916 COCONUT OIL 1 L",
+        normalizedName: "916 coconut oil 1 l",
+        price: 310.0,
+      },
+      {
+        shopId: testShop2.id,
+        name: "GC VINEGAR 1LT",
+        normalizedName: "gc vinegar 1lt",
+        price: 28.0,
+      },
+      {
+        shopId: testShop3.id,
+        name: "TATA SALT 1 KG",
+        normalizedName: "tata salt 1 kg",
+        price: 18.0,
+      },
+      {
+        shopId: testShop1.id,
+        name: "EXO DISHWASH BAR 10/-",
+        normalizedName: "exo dishwash bar 10/-",
+        price: 9.0,
+      },
+      {
+        shopId: testShop2.id,
+        name: "EXO STEEL SCRUB 3 M",
+        normalizedName: "exo steel scrub 3 m",
+        price: 22.0,
+      },
+      {
+        shopId: testShop3.id,
+        name: "KT CHICKEN MASALA 100GM",
+        normalizedName: "kt chicken masala 100gm",
+        price: 50.0,
+      },
+      {
+        shopId: testShop1.id,
+        name: "CYCLE PURE AGARBATHI",
+        normalizedName: "cycle pure agarbathi",
+        price: 18.0,
+      },
+      {
+        shopId: testShop2.id,
+        name: "BTA MILK BIKIS 120G",
+        normalizedName: "bta milk bikis 120g",
+        price: 32.0,
+      },
+      {
+        shopId: testShop3.id,
+        name: "EXO SUPER GEL 250 G",
+        normalizedName: "exo super gel 250 g",
+        price: 29.0,
+      },
+      {
+        shopId: testShop1.id,
+        name: "PRIL PERFECTCRAFT GEL 425ML",
+        normalizedName: "pril perfectcraft gel 425ml",
+        price: 110.0,
+      },
+    ],
+  });
+
   // Create test users
   const users = await Promise.all([
     prisma.user.create({
