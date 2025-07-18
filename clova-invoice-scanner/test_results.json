@@ -1,0 +1,124 @@
+{
+  "success": true,
+  "data": {
+    "extractedItems": [
+      {
+        "name": "Milk",
+        "price": 4.99,
+        "quantity": 2,
+        "total": 9.98,
+        "category": "dairy"
+      },
+      {
+        "name": "Bread",
+        "price": 3.49,
+        "quantity": 1,
+        "total": 3.49,
+        "category": "bakery"
+      },
+      {
+        "name": "Eggs",
+        "price": 5.99,
+        "quantity": 1,
+        "total": 5.99,
+        "category": "dairy"
+      }
+    ],
+    "total": 19.46,
+    "merchant": "Sample Store",
+    "betterOffers": [
+      {
+        "originalItem": {
+          "name": "Milk",
+          "price": 4.99,
+          "quantity": 2,
+          "total": 9.98,
+          "category": "dairy"
+        },
+        "betterOffers": [
+          {
+            "productId": "prod-3",
+            "productName": "Milk",
+            "shopName": "Target",
+            "shopAddress": "456 Oak Ave, City, State",
+            "shopRating": 4.0,
+            "price": 3.49,
+            "savings": 1.5,
+            "savingsPercentage": 30.1
+          },
+          {
+            "productId": "prod-1",
+            "productName": "Milk",
+            "shopName": "Walmart",
+            "shopAddress": "123 Main St, City, State",
+            "shopRating": 4.2,
+            "price": 3.99,
+            "savings": 1.0,
+            "savingsPercentage": 20.0
+          }
+        ]
+      },
+      {
+        "originalItem": {
+          "name": "Bread",
+          "price": 3.49,
+          "quantity": 1,
+          "total": 3.49,
+          "category": "bakery"
+        },
+        "betterOffers": [
+          {
+            "productId": "prod-2",
+            "productName": "Bread",
+            "shopName": "Walmart",
+            "shopAddress": "123 Main St, City, State",
+            "shopRating": 4.2,
+            "price": 2.49,
+            "savings": 1.0,
+            "savingsPercentage": 28.7
+          }
+        ]
+      },
+      {
+        "originalItem": {
+          "name": "Eggs",
+          "price": 5.99,
+          "quantity": 1,
+          "total": 5.99,
+          "category": "dairy"
+        },
+        "betterOffers": [
+          {
+            "productId": "prod-6",
+            "productName": "Eggs",
+            "shopName": "Target",
+            "shopAddress": "456 Oak Ave, City, State",
+            "shopRating": 4.0,
+            "price": 4.49,
+            "savings": 1.5,
+            "savingsPercentage": 25.0
+          },
+          {
+            "productId": "prod-5",
+            "productName": "Eggs",
+            "shopName": "Walmart",
+            "shopAddress": "123 Main St, City, State",
+            "shopRating": 4.2,
+            "price": 4.99,
+            "savings": 1.0,
+            "savingsPercentage": 16.7
+          }
+        ]
+      }
+    ],
+    "processingTime": 2.0005972385406494,
+    "totalSavings": 4.0,
+    "scanId": "84d057ca-c6a0-47d9-9449-ef7609144d4b"
+  },
+  "metadata": {
+    "confidence_score": 0.92,
+    "model_used": "donut-mock",
+    "items_found": 3,
+    "alternatives_found": 3
+  }
+}

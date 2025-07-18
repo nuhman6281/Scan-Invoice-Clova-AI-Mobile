@@ -137,3 +137,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+donut_env
+donut_env copy
+# clova-invoice-scanner
+clova-invoice-scanner/backend/node_modules
+clova-invoice-scanner/backend/dist
+clova-invoice-scanner/backend/build
+clova-invoice-scanner/backend/logs
+clova-invoice-scanner/backend/data
+clova-invoice-scanner/backend/config
+clova-invoice-scanner/backend/logs

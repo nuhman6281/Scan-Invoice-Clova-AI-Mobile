@@ -53,6 +53,7 @@ router.post(
       try {
         clovaResult = await ClovaService.processInvoice(req.file.buffer);
 
+        logger.info("Raw CLOVA service response", { clovaResult });
         logger.info("CLOVA processing completed", {
           processingTime: Date.now() - startTime,
           itemsFound: clovaResult.items?.length || 0,
@@ -178,6 +179,7 @@ router.post(
           merchant: clovaResult.merchant || "Unknown",
           betterOffers,
           processingTime: Date.now() - startTime,
+          accuracy: clovaResult.confidence_score || 0,
         },
       });
     } catch (error) {
