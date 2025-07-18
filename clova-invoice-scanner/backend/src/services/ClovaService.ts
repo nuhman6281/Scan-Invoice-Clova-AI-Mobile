@@ -20,22 +20,15 @@ class ClovaService {
         },
       });
 
-      // Test connection to real CLOVA service
-      const isConnected = await this.ping();
-      if (isConnected) {
-        logger.info("Real CLOVA AI service connected successfully");
-        this.useMock = false;
-      } else {
-        logger.warn(
-          "Real2 CLOVA service not available - falling back to mock processing"
-        );
-        this.useMock = true;
-      }
+      // Don't test connection during initialization - will test when needed
+      logger.info(
+        "CLOVA service initialized - will check connection when needed"
+      );
     } catch (error) {
       logger.warn(
-        "Real1 CLOVA service not available - falling back to mock processing"
+        "Failed to initialize CLOVA service:",
+        error instanceof Error ? error.message : "Unknown error"
       );
-      this.useMock = true;
       // Don't throw error, just log warning
     }
   }
@@ -54,10 +47,12 @@ class ClovaService {
 
   public static async processInvoice(imageBuffer: Buffer): Promise<any> {
     try {
-      // if (this.useMock) {
-      //   logger.info("Using mock CLOVA processing");
-      //   return await this.processWithMock(imageBuffer);
-      // }
+      // Check if real CLOVA service is available
+      const isConnected = await this.ping();
+      if (!isConnected) {
+        logger.warn("Real CLOVA service not available - using mock processing");
+        return await this.processWithMock(imageBuffer);
+      }
 
       logger.info("Using real CLOVA AI processing");
 

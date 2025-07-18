@@ -97,7 +97,8 @@ class ClovaProcessor:
             )
             
             self.donut_model = VisionEncoderDecoderModel.from_pretrained(
-                "naver-clova-ix/donut-base-finetuned-cord-v2"
+                "naver-clova-ix/donut-base-finetuned-cord-v2",
+                ignore_mismatched_sizes=True  # Handle weight mismatches
             )
             
             # Move to device and set to eval mode

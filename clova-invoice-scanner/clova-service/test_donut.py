@@ -14,7 +14,10 @@ def test_donut_model():
     # Load model
     print("📦 Loading model...")
     processor = DonutProcessor.from_pretrained("naver-clova-ix/donut-base")
-    model = VisionEncoderDecoderModel.from_pretrained("naver-clova-ix/donut-base-finetuned-cord-v2")
+    model = VisionEncoderDecoderModel.from_pretrained(
+        "naver-clova-ix/donut-base-finetuned-cord-v2",
+        ignore_mismatched_sizes=True  # Handle weight mismatches
+    )
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)

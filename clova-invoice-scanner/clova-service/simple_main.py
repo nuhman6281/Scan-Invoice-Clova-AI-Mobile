@@ -73,7 +73,10 @@ async def startup_event():
         
         # Load Donut processor and model
         donut_processor = DonutProcessor.from_pretrained("naver-clova-ix/donut-base")
-        donut_model = VisionEncoderDecoderModel.from_pretrained("naver-clova-ix/donut-base-finetuned-cord-v2")
+        donut_model = VisionEncoderDecoderModel.from_pretrained(
+        "naver-clova-ix/donut-base-finetuned-cord-v2",
+        ignore_mismatched_sizes=True  # Handle weight mismatches
+    )
         
         # Move to device and set to eval mode
         donut_model.to(device)

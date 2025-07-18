@@ -98,7 +98,9 @@ class SwinEncoder(nn.Module):
             x: (batch_size, num_channels, height, width)
         """
         x = self.model.patch_embed(x)
-        x = self.model.pos_drop(x)
+        # Handle different timm versions - pos_drop might not exist
+        if hasattr(self.model, 'pos_drop'):
+            x = self.model.pos_drop(x)
         x = self.model.layers(x)
         return x
 
@@ -414,6 +416,18 @@ class DonutModel(PreTrainedModel):
         )
         return decoder_outputs
 
+    def _init_weights(self, module):
+        """
+        Initialize the weights of the model. This method is required by newer transformers versions.
+        """
+        if isinstance(module, (torch.nn.Linear, torch.nn.Embedding)):
+            module.weight.data.normal_(mean=0.0, std=0.02)
+            if isinstance(module, torch.nn.Linear) and module.bias is not None:
+                module.bias.data.zero_()
+        elif isinstance(module, torch.nn.LayerNorm):
+            module.bias.data.zero_()
+            module.weight.data.fill_(1.0)
+
     def inference(
         self,
         image: PIL.Image = None,
@@ -594,7 +608,7 @@ class DonutModel(PreTrainedModel):
                 Name of a pretrained model name either registered in huggingface.co. or saved in local,
                 e.g., `naver-clova-ix/donut-base`, or `naver-clova-ix/donut-base-finetuned-rvlcdip`
         """
-        model = super(DonutModel, cls).from_pretrained(pretrained_model_name_or_path, revision="official", *model_args, **kwargs)
+        model = super(DonutModel, cls).from_pretrained(pretrained_model_name_or_path, revision="official", ignore_mismatched_sizes=True, *model_args, **kwargs)
 
         # truncate or interplolate position embeddings of donut decoder
         max_length = kwargs.get("max_length", model.config.max_position_embeddings)

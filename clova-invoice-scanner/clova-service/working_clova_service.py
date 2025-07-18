@@ -80,7 +80,10 @@ class WorkingClovaProcessor:
             
             # Load Donut processor and model
             self.processor = DonutProcessor.from_pretrained("naver-clova-ix/donut-base")
-            self.model = VisionEncoderDecoderModel.from_pretrained("naver-clova-ix/donut-base-finetuned-cord-v2")
+            self.model = VisionEncoderDecoderModel.from_pretrained(
+                "naver-clova-ix/donut-base-finetuned-cord-v2",
+                ignore_mismatched_sizes=True  # Handle weight mismatches
+            )
             
             # Move to device and set to eval mode
             self.model.to(self.device)
@@ -124,7 +127,7 @@ class WorkingClovaProcessor:
             pixel_values = pixel_values.to(self.device)
             
             # Generate with task prompt for receipts
-            task_prompt = "<s_cord>"
+            task_prompt = "<s_cord-v2>"
             decoder_input_ids = self.processor.tokenizer(
                 task_prompt, 
                 add_special_tokens=False, 
@@ -177,7 +180,9 @@ class WorkingClovaProcessor:
         """Parse Donut model output into structured data"""
         try:
             # Remove task prompt
-            if sequence.startswith("<s_cord>"):
+            if sequence.startswith("<s_cord-v2>"):
+                sequence = sequence[len("<s_cord-v2>"):]
+            elif sequence.startswith("<s_cord>"):
                 sequence = sequence[len("<s_cord>"):]
             
             # Clean up the sequence

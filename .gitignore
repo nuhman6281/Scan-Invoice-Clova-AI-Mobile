@@ -138,7 +138,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 donut_env
-
+donut_env copy
 # clova-invoice-scanner
 clova-invoice-scanner/backend/node_modules
 clova-invoice-scanner/backend/dist
