@@ -17,7 +17,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Only ignore lib/ in Python contexts (virtual environments, etc.)
+# Don't ignore Flutter app lib/ directories
 lib64/
 parts/
 sdist/
