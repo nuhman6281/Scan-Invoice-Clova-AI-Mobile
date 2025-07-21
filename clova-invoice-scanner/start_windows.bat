@@ -12,7 +12,7 @@ if errorlevel 1 (
 )
 
 REM Check if Docker Compose is available
-docker-compose --version >nul 2>&1
+docker compose version >nul 2>&1
 if errorlevel 1 (
     echo ❌ Docker Compose is not available. Please install Docker Compose and try again.
     pause
@@ -21,11 +21,11 @@ if errorlevel 1 (
 
 REM Stop any existing containers
 echo 🛑 Stopping existing containers...
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml down --remove-orphans
+docker compose -f docker-compose.yml -f docker-compose.windows.yml down --remove-orphans
 
 REM Build and start services with Windows-specific configuration
 echo 🔨 Building and starting services...
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
 
 REM Wait for services to be healthy
 echo ⏳ Waiting for services to be ready...
@@ -35,7 +35,7 @@ REM Check service health
 echo 🏥 Checking service health...
 
 REM Check Redis
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml exec -T redis redis-cli ping >nul 2>&1
+docker compose -f docker-compose.yml -f docker-compose.windows.yml exec -T redis redis-cli ping >nul 2>&1
 if errorlevel 1 (
     echo ⚠️  Redis health check failed, but continuing...
 ) else (
@@ -43,7 +43,7 @@ if errorlevel 1 (
 )
 
 REM Check PostgreSQL
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml exec -T postgres pg_isready -U scanner -d invoice_scanner >nul 2>&1
+docker compose -f docker-compose.yml -f docker-compose.windows.yml exec -T postgres pg_isready -U scanner -d invoice_scanner >nul 2>&1
 if errorlevel 1 (
     echo ⚠️  PostgreSQL health check failed, but continuing...
 ) else (
@@ -92,10 +92,10 @@ echo    • Database Admin: http://localhost:8080
 echo    • Redis Commander: http://localhost:8081
 echo.
 echo 📊 To view logs:
-echo    • All services: docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f
-echo    • Redis only: docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f redis
+echo    • All services: docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f
+echo    • Redis only: docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f redis
 echo.
 echo 🛑 To stop services:
-echo    docker-compose -f docker-compose.yml -f docker-compose.windows.yml down
+echo    docker compose -f docker-compose.yml -f docker-compose.windows.yml down
 echo.
 pause 

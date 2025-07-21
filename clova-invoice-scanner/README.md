@@ -74,7 +74,7 @@ start_windows.bat
 
 ```cmd
 # Start all services with Windows-specific configuration
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
 ```
 
 **📖 For detailed Windows setup instructions, see [WINDOWS_SETUP.md](WINDOWS_SETUP.md)**
@@ -318,10 +318,10 @@ flutter run
 
 ```bash
 # Build and run with Docker Compose
-docker-compose up -d
+docker compose up -d
 
 # Scale services
-docker-compose up -d --scale backend=3 --scale clova-service=2
+docker compose up -d --scale backend=3 --scale clova-service=2
 ```
 
 ### Production Considerations

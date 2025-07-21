@@ -19,7 +19,7 @@ cd clova-invoice-scanner
 ### 1. Database
 
 ```bash
-docker-compose up -d postgres redis
+docker compose up -d postgres redis
 ```
 
 ### 2. Backend

@@ -31,13 +31,13 @@ First, start the PostgreSQL and Redis services:
 
 ```bash
 cd clova-invoice-scanner
-docker-compose up -d postgres redis
+docker compose up -d postgres redis
 ```
 
 Wait for the services to be ready (about 30 seconds), then verify:
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 ### 2. Start Backend API
@@ -127,7 +127,7 @@ echo "🚀 Starting CLOVA AI Invoice Scanner System..."
 # Start database services
 echo "📊 Starting database services..."
 cd clova-invoice-scanner
-docker-compose up -d postgres redis
+docker compose up -d postgres redis
 
 # Wait for database to be ready
 echo "⏳ Waiting for database to be ready..."
@@ -166,7 +166,7 @@ echo ""
 echo "Press Ctrl+C to stop all services"
 
 # Wait for interrupt
-trap "echo '🛑 Stopping services...'; kill $BACKEND_PID $CLOVA_PID $ADMIN_PID; docker-compose down; exit" INT
+trap "echo '🛑 Stopping services...'; kill $BACKEND_PID $CLOVA_PID $ADMIN_PID; docker compose down; exit" INT
 wait
 EOF
 
@@ -181,8 +181,8 @@ chmod +x clova-invoice-scanner/start_all.sh
 | Backend API  | http://localhost:3002 | 3002 | `curl http://localhost:3002/api/health` |
 | CLOVA AI     | http://localhost:8000 | 8000 | `curl http://localhost:8000/health`     |
 | Admin Portal | http://localhost:3000 | 3000 | Open in browser                         |
-| PostgreSQL   | localhost             | 5432 | `docker-compose ps postgres`            |
-| Redis        | localhost             | 6379 | `docker-compose ps redis`               |
+| PostgreSQL   | localhost             | 5432 | `docker compose ps postgres`            |
+| Redis        | localhost             | 6379 | `docker compose ps redis`               |
 
 ## Verification Steps
 
@@ -191,7 +191,7 @@ After starting all services, verify they're working:
 ### 1. Check Database
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 ### 2. Check Backend
@@ -240,8 +240,8 @@ kill -9 <PID>
 ```bash
 # Reset database
 cd clova-invoice-scanner
-docker-compose down
-docker-compose up -d postgres redis
+docker compose down
+docker compose up -d postgres redis
 cd backend
 npx prisma migrate reset
 npx prisma db seed
@@ -278,7 +278,7 @@ To stop all services:
 # Stop backend (Ctrl+C in its terminal)
 # Stop database services
 cd clova-invoice-scanner
-docker-compose down
+docker compose down
 ```
 
 ## Environment Variables

@@ -14,22 +14,22 @@ if ! docker info > /dev/null 2>&1; then
 fi
 
 # Check if Docker Compose is available
-if ! docker-compose --version > /dev/null 2>&1; then
-    echo "❌ Docker Compose is not available. Please install Docker Compose and try again."
+if ! docker compose version > /dev/null 2>&1; then
+    echo "❌ Docker Compose is not available. Please install Docker Compose first."
     exit 1
 fi
 
 # Stop any existing containers
 echo "🛑 Stopping existing containers..."
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml down --remove-orphans
+docker compose -f docker-compose.yml -f docker-compose.windows.yml down --remove-orphans
 
 # Remove any existing volumes (optional - uncomment if you want to start fresh)
 # echo "🗑️  Removing existing volumes..."
-# docker-compose -f docker-compose.yml -f docker-compose.windows.yml down -v
+# docker compose -f docker-compose.yml -f docker-compose.windows.yml down -v
 
 # Build and start services with Windows-specific configuration
 echo "🔨 Building and starting services..."
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
 
 # Wait for services to be healthy
 echo "⏳ Waiting for services to be ready..."
@@ -39,14 +39,14 @@ sleep 10
 echo "🏥 Checking service health..."
 
 # Check Redis
-if docker-compose -f docker-compose.yml -f docker-compose.windows.yml exec -T redis redis-cli ping > /dev/null 2>&1; then
+if docker compose -f docker-compose.yml -f docker-compose.windows.yml exec -T redis redis-cli ping > /dev/null 2>&1; then
     echo "✅ Redis is healthy"
 else
     echo "⚠️  Redis health check failed, but continuing..."
 fi
 
 # Check PostgreSQL
-if docker-compose -f docker-compose.yml -f docker-compose.windows.yml exec -T postgres pg_isready -U scanner -d invoice_scanner > /dev/null 2>&1; then
+if docker compose -f docker-compose.yml -f docker-compose.windows.yml exec -T postgres pg_isready -U scanner -d invoice_scanner > /dev/null 2>&1; then
     echo "✅ PostgreSQL is healthy"
 else
     echo "⚠️  PostgreSQL health check failed, but continuing..."
@@ -96,9 +96,9 @@ echo "   • Database Admin: http://localhost:8080"
 echo "   • Redis Commander: http://localhost:8081"
 echo ""
 echo "📊 To view logs:"
-echo "   • All services: docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f"
-echo "   • Redis only: docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f redis"
+echo "   • All services: docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f"
+echo "   • Redis only: docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f redis"
 echo ""
 echo "🛑 To stop services:"
-echo "   docker-compose -f docker-compose.yml -f docker-compose.windows.yml down"
+echo "   docker compose -f docker-compose.yml -f docker-compose.windows.yml down"
 echo "" 

@@ -33,7 +33,7 @@ start_windows.bat
 cd clova-invoice-scanner
 
 # Start services with Windows-specific configuration
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
 ```
 
 ### Option 3: Using WSL/Bash (if you have WSL installed)
@@ -81,8 +81,8 @@ cd clova-invoice-scanner
 **Solution**:
 
 1. Check if Redis container is running: `docker ps`
-2. Check Redis logs: `docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs redis`
-3. Restart Redis: `docker-compose -f docker-compose.yml -f docker-compose.windows.yml restart redis`
+2. Check Redis logs: `docker compose -f docker-compose.yml -f docker-compose.windows.yml logs redis`
+3. Restart Redis: `docker compose -f docker-compose.yml -f docker-compose.windows.yml restart redis`
 
 ### Docker Issues
 
@@ -140,41 +140,41 @@ Once running, access these services:
 
 ```cmd
 # All services
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f
+docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f
 
 # Specific service
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f redis
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f postgres
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs -f backend
+docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f redis
+docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f postgres
+docker compose -f docker-compose.yml -f docker-compose.windows.yml logs -f backend
 ```
 
 ### Stop Services
 
 ```cmd
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml down
+docker compose -f docker-compose.yml -f docker-compose.windows.yml down
 ```
 
 ### Restart Services
 
 ```cmd
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml restart
+docker compose -f docker-compose.yml -f docker-compose.windows.yml restart
 ```
 
 ### Clean Start (removes volumes)
 
 ```cmd
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml down -v
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.windows.yml down -v
+docker compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
 ```
 
 ### Check Service Health
 
 ```cmd
 # Redis
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml exec redis redis-cli ping
+docker compose -f docker-compose.yml -f docker-compose.windows.yml exec redis redis-cli ping
 
 # PostgreSQL
-docker-compose -f docker-compose.yml -f docker-compose.windows.yml exec postgres pg_isready -U scanner -d invoice_scanner
+docker compose -f docker-compose.yml -f docker-compose.windows.yml exec postgres pg_isready -U scanner -d invoice_scanner
 
 # Backend
 curl http://localhost:3000/health
@@ -194,7 +194,7 @@ curl http://localhost:8000/health
 
 If you encounter issues:
 
-1. Check the logs: `docker-compose -f docker-compose.yml -f docker-compose.windows.yml logs`
+1. Check the logs: `docker compose -f docker-compose.yml -f docker-compose.windows.yml logs`
 2. Ensure Docker Desktop is running and has sufficient resources
 3. Try a clean start by removing volumes and rebuilding
 4. Check Windows Event Viewer for system-level issues
