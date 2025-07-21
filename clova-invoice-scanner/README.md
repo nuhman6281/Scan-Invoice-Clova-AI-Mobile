@@ -37,7 +37,9 @@ A complete, production-ready invoice scanning system that uses CLOVA AI to extra
 
 ## 🛠️ Quick Setup
 
-### 1. Clone and Setup
+### For macOS/Linux
+
+#### 1. Clone and Setup
 
 ```bash
 # Clone the repository
@@ -48,12 +50,34 @@ cd clova-invoice-scanner
 ./setup.sh
 ```
 
-### 2. Start the System
+#### 2. Start the System
 
 ```bash
 # Start all services
-./start-all.sh
+./start_all.sh
 ```
+
+### For Windows
+
+#### 1. Clone and Setup
+
+```cmd
+# Clone the repository
+git clone <repository-url>
+cd clova-invoice-scanner
+
+# Run the Windows setup script
+start_windows.bat
+```
+
+#### 2. Start the System
+
+```cmd
+# Start all services with Windows-specific configuration
+docker-compose -f docker-compose.yml -f docker-compose.windows.yml up --build -d
+```
+
+**📖 For detailed Windows setup instructions, see [WINDOWS_SETUP.md](WINDOWS_SETUP.md)**
 
 ### 3. Access Services
 

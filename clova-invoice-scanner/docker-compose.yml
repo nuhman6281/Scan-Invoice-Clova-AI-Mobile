@@ -2,7 +2,6 @@ services:
   # PostgreSQL Database with PostGIS for spatial queries
   postgres:
     image: postgres:15-alpine
-    platform: linux/arm64/v8
     container_name: clova-postgres
     environment:
       POSTGRES_DB: invoice_scanner
@@ -24,7 +23,6 @@ services:
   # Redis for caching and sessions
   redis:
     image: redis:7-alpine
-    platform: linux/arm64/v8
     container_name: clova-redis
     ports:
       - "6380:6379"
@@ -32,7 +30,7 @@ services:
       - redis_data:/data
     networks:
       - clova_network
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --ignore-warnings ARM64-COW-BUG
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 30s

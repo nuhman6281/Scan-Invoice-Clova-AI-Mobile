@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  # Redis configuration optimized for Windows
+  redis:
+    image: redis:7-alpine
+    container_name: clova-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - clova_network
+    command: redis-server --appendonly yes --ignore-warnings ARM64-COW-BUG --save 900 1 --save 300 10 --save 60 10000
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # Windows-specific optimizations
+    environment:
+      - REDIS_MAXMEMORY=256mb
+      - REDIS_MAXMEMORY_POLICY=allkeys-lru
+    # Disable THP warnings and optimize for Windows
+    sysctls:
+      - vm.overcommit_memory=1
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+  # PostgreSQL configuration optimized for Windows
+  postgres:
+    image: postgres:15-alpine
+    container_name: clova-postgres
+    environment:
+      POSTGRES_DB: invoice_scanner
+      POSTGRES_USER: scanner
+      POSTGRES_PASSWORD: password123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+      # Windows-specific PostgreSQL optimizations
+      POSTGRES_SHARED_BUFFERS: 256MB
+      POSTGRES_EFFECTIVE_CACHE_SIZE: 1GB
+      POSTGRES_WORK_MEM: 4MB
+      POSTGRES_MAINTENANCE_WORK_MEM: 64MB
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - clova_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scanner -d invoice_scanner"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  clova_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
